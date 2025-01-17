@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct DaWarIch_CompanionApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(appDelegate)
         }
     }
 }

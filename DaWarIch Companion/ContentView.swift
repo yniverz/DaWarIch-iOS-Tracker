@@ -8,14 +8,70 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var appDelegate: AppDelegate
+    var locationHelper: LocationHelper {
+        appDelegate.locationHelper
+    }
+    
+    @State var trackingActivated = false
+    @State var alwaysHighDensity = false
+    @State var debugNotifications = false
+    @State var selectedMaxBufferSize = 300
+    
+    var maxBufferSizes: [Int] = [60, 60*2, 60*5, 60*10]
+    
     var body: some View {
+        Text("DaWarIch - Tracker")
+            .font(.title)
+            .fontWeight(.bold)
+            .padding(.vertical)
+        
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            List {
+                Section("Options") {
+                    Toggle("Tracking Activated", isOn: $trackingActivated)
+                        .onChange(of: trackingActivated) {
+                            if locationHelper.trackingActivated != trackingActivated {
+                                locationHelper.trackingActivated = trackingActivated
+                            }
+                        }
+                    
+                    Toggle("Always High Density", isOn: $alwaysHighDensity)
+                        .onChange(of: alwaysHighDensity) {
+                            if locationHelper.alwaysHighDensity != alwaysHighDensity {
+                                locationHelper.alwaysHighDensity = alwaysHighDensity
+                            }
+                        }
+                    
+                    Toggle("Debug Notifications", isOn: $debugNotifications)
+                        .onChange(of: debugNotifications) {
+                            if locationHelper.debugNotifications != debugNotifications {
+                                locationHelper.debugNotifications = debugNotifications
+                            }
+                        }
+                    Picker("MaxBuffer", selection: $selectedMaxBufferSize) {
+                        ForEach(0..<maxBufferSizes.count, id: \.self) { sizeIndex in
+                            Text("\(maxBufferSizes[sizeIndex])")
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .onChange(of: selectedMaxBufferSize) {
+                        locationHelper.selectedMaxBufferSize = maxBufferSizes[selectedMaxBufferSize]
+                    }
+                    
+                }
+            }
         }
-        .padding()
+        .onAppear() {
+            trackingActivated = locationHelper.trackingActivated
+            alwaysHighDensity = locationHelper.alwaysHighDensity
+            debugNotifications = locationHelper.debugNotifications
+            for index in 0..<maxBufferSizes.count {
+                if maxBufferSizes[index] == locationHelper.selectedMaxBufferSize {
+                    selectedMaxBufferSize = index
+                }
+            }
+        }
     }
 }
 
