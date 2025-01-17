@@ -43,4 +43,3 @@ This App is intended to be used with the (self hosted) [DaWarIch](https://github
 This app uses Core Location to track user location in the background and foreground. Make sure to enable location permissions in iOS settings when prompted by the app. Relevant strings are provided in **Info.plist** under `NSLocationAlwaysUsageDescription` and `NSLocationWhenInUseUsageDescription`.
 
 ---
-```
