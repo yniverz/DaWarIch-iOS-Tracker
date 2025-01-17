@@ -13,6 +13,8 @@ struct ContentView: View {
         appDelegate.locationHelper
     }
     
+    @State var dawarichServerHost = ""
+    @State var dawarichServerKey = ""
     @State var trackingActivated = false
     @State var alwaysHighDensity = false
     @State var debugNotifications = false
@@ -28,7 +30,18 @@ struct ContentView: View {
         
         VStack {
             List {
-                Section("Options") {
+                Section("Server Options") {
+                    TextField("Host (Include http/s)", text: $dawarichServerHost)
+                        .onChange(of: dawarichServerHost) {
+                            locationHelper.dawarichServerHost = dawarichServerHost
+                        }
+                    TextField("API Key", text: $dawarichServerKey)
+                        .onChange(of: dawarichServerKey) {
+                            locationHelper.dawarichServerKey = dawarichServerKey
+                        }
+                    
+                }
+                Section("Location Options") {
                     Toggle("Tracking Activated", isOn: $trackingActivated)
                         .onChange(of: trackingActivated) {
                             if locationHelper.trackingActivated != trackingActivated {
@@ -49,6 +62,19 @@ struct ContentView: View {
                                 locationHelper.debugNotifications = debugNotifications
                             }
                         }
+                    
+                    HStack {
+                        Text("Buffer length")
+                            .frame(alignment: .leading)
+                        Text("\(locationHelper.traceBuffer.count)")
+                    }
+                    
+                    Button("Clear Buffer") {
+                        locationHelper.clearBuffer()
+                    }
+                }
+                Section("Send Options") {
+                    Text("Max Databuffer count:")
                     Picker("MaxBuffer", selection: $selectedMaxBufferSize) {
                         ForEach(0..<maxBufferSizes.count, id: \.self) { sizeIndex in
                             Text("\(maxBufferSizes[sizeIndex])")
@@ -63,6 +89,8 @@ struct ContentView: View {
             }
         }
         .onAppear() {
+            dawarichServerHost = locationHelper.dawarichServerHost
+            dawarichServerKey = locationHelper.dawarichServerKey
             trackingActivated = locationHelper.trackingActivated
             alwaysHighDensity = locationHelper.alwaysHighDensity
             debugNotifications = locationHelper.debugNotifications

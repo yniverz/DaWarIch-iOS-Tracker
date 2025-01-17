@@ -8,6 +8,7 @@
 import Foundation
 import CoreLocation
 import UserNotifications
+import UIKit
 
 class LocationHelper: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
@@ -26,6 +27,24 @@ class LocationHelper: NSObject, ObservableObject {
     
     //set default values for configuration parameters (overwritten in init block)
     @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
+    
+    
+    var dawarichServerHost: String {
+        set {
+            UserDefaults.standard.set(newValue, forKey: "dawarichServerHost")
+        }
+        get {
+            UserDefaults.standard.string(forKey: "dawarichServerHost") ?? ""
+        }
+    }
+    var dawarichServerKey: String {
+        set {
+            UserDefaults.standard.set(newValue, forKey: "dawarichServerKey")
+        }
+        get {
+            UserDefaults.standard.string(forKey: "dawarichServerKey") ?? ""
+        }
+    }
     
     var trackingActivated: Bool {
         set {
@@ -210,6 +229,8 @@ class LocationHelper: NSObject, ObservableObject {
                     self.locationManager(didUpdateLocation: location)
                 }
             }
+            
+            sendToServer()
         } catch {
             print("Could not start location updates")
         }
@@ -285,6 +306,10 @@ extension LocationHelper: CLLocationManagerDelegate {
             self.traceBuffer.append(newItem)
             
             self.lastLocationItem = newItem
+            
+            if self.traceBuffer.count >= self.selectedMaxBufferSize {
+                self.sendToServer()
+            }
         }
     }
     
@@ -317,19 +342,191 @@ extension LocationHelper: CLLocationManagerDelegate {
     
     
     func sendNotification(_ message: String, title: String = "DaWarIch") {
-        print("sending \(message)")
+        print("sending notification: \(message)")
         let content = UNMutableNotificationContent()
-        content.title = "Notification title"
-        content.subtitle = "Notification subtitle"
-        content.body = "Notification body"
+        content.title = title
+//        content.subtitle = message
+        content.body = message
         content.sound = UNNotificationSound.default
         
         // show this notification five seconds from now
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request)
     }
     
     
+    
+    func sendToServer() {
+    //    {
+    //      "locations": [
+    //        {
+    //          "type": "Feature",
+    //          "geometry": {
+    //            "type": "Point",
+    //            "coordinates": [
+    //              13.356718,
+    //              52.502397
+    //            ]
+    //          },
+    //          "properties": {
+    //            "timestamp": "2021-06-01T12:00:00Z",
+    //            "altitude": 0,
+    //            "speed": 0,
+    //            "horizontal_accuracy": 0,
+    //            "vertical_accuracy": 0,
+    //            "motion": [],
+    //            "pauses": false,
+    //            "activity": "unknown",
+    //            "desired_accuracy": 0,
+    //            "deferred": 0,
+    //            "significant_change": "unknown",
+    //            "locations_in_payload": 1,
+    //            "device_id": "Swagger",
+    //            "wifi": "unknown",
+    //            "battery_state": "unknown",
+    //            "battery_level": 0
+    //          }
+    //        }
+    //      ]
+    //    }
+        // 1. Make sure we have something to send and a valid host
+        guard !traceBuffer.isEmpty,
+              !dawarichServerHost.isEmpty,
+              let url = URL(string: dawarichServerHost + "/api/v1/overland/batches")
+        else {
+            print("No data to send or invalid server host.")
+            return
+        }
+
+        // 2. Construct data structures that match the expected JSON
+        struct OverlandFeatureCollection: Encodable {
+            let locations: [OverlandFeature]
+        }
+        
+        struct OverlandFeature: Encodable {
+            let type = "Feature"
+            let geometry: OverlandGeometry
+            let properties: OverlandProperties
+        }
+        
+        struct OverlandGeometry: Encodable {
+            let type = "Point"
+            let coordinates: [Double]  // [longitude, latitude]
+        }
+        
+        struct OverlandProperties: Encodable {
+            let timestamp: String
+            let altitude: Double
+            let speed: Double
+            let horizontal_accuracy: Double
+            let vertical_accuracy: Double
+            let motion: [String]
+            let pauses: Bool
+            let activity: String
+            let desired_accuracy: Double
+            let deferred: Double
+            let significant_change: String
+            let locations_in_payload: Int
+            let device_id: String
+            let wifi: String
+            let battery_state: String
+            let battery_level: Double
+        }
+
+        // 3. Map traceBuffer into our OverlandFeatureCollection
+        var features: [OverlandFeature] = []
+        let dateFormatter = ISO8601DateFormatter()
+        // You can also use something else as device ID, e.g. the serverKey, UUID, or a fixed string.
+        let deviceID = UIDevice.current.name
+        
+        for item in traceBuffer {
+            let date = Date(timeIntervalSince1970: item.time)
+            let isoTime = dateFormatter.string(from: date)
+            
+            let geometry = OverlandGeometry(
+                coordinates: [item.lng, item.lat] // GeoJSON expects [lon, lat]
+            )
+            
+            let properties = OverlandProperties(
+                timestamp: isoTime,
+                altitude: item.alt,
+                speed: item.spd,
+                horizontal_accuracy: item.horAcc,
+                vertical_accuracy: item.altAcc,
+                motion: [],               // or fill in actual motion info
+                pauses: false,
+                activity: "unknown",      // or fill in if you track user activity
+                desired_accuracy: 0,
+                deferred: 0,
+                significant_change: "unknown",
+                locations_in_payload: 1,
+                device_id: deviceID,
+                wifi: "unknown",
+                battery_state: "unknown",
+                battery_level: 0
+            )
+            
+            let feature = OverlandFeature(
+                geometry: geometry,
+                properties: properties
+            )
+            
+            features.append(feature)
+        }
+        
+        let featureCollection = OverlandFeatureCollection(locations: features)
+        
+        // 4. Encode the feature collection to JSON
+        guard let jsonData = try? JSONEncoder().encode(featureCollection) else {
+            print("Error encoding feature collection.")
+            return
+        }
+        
+        // 5. Create and configure the request
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // If your server expects Bearer token with your server key:
+        if !dawarichServerKey.isEmpty {
+            request.setValue("Bearer \(dawarichServerKey)", forHTTPHeaderField: "Authorization")
+        }
+        
+        request.httpBody = jsonData
+        
+        // 6. Send the data (URLSession background tasks or async/await are also possible)
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            guard let self = self else { return }
+            
+            // Handle networking errors
+            if let error = error {
+                print("Error sending data to server: \(error.localizedDescription)")
+                return
+            }
+            
+            // Handle HTTP status codes
+            if let httpResponse = response as? HTTPURLResponse {
+                guard (200...299).contains(httpResponse.statusCode) else {
+                    print("Server responded with status code: \(httpResponse.statusCode)")
+                    return
+                }
+            }
+            
+            // Optionally parse `data` if server returns details
+            print("Data successfully sent to server and local buffer will be cleared.")
+            clearBuffer()
+        }
+        task.resume()
+    }
+    
+    
+    
+    func clearBuffer() {
+        writingQueue.async {
+            self.traceBuffer = []
+        }
+    }
     
     
     // ##############
