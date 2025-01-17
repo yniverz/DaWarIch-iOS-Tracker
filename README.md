@@ -2,6 +2,7 @@
 
 An iOS companion app project written in Swift.  
 This repository contains the Xcode project, source files, and tests for DaWarIch Companion.
+This App is intended to be used with the (self hosted) [DaWarIch](https://github.com/Freika/dawarich) Location Timeline app
 
 ---
 
