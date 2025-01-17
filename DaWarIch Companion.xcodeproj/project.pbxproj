@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DFD9450E2D3ACFB900111A22 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DFD9450D2D3ACFB400111A22 /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		DF28C5CA2D3AC9D00063A552 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		DF28C5B92D3AC9CF0063A552 /* DaWarIch Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DaWarIch Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF28C5C92D3AC9D00063A552 /* DaWarIch CompanionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DaWarIch CompanionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF28C5D32D3AC9D00063A552 /* DaWarIch CompanionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DaWarIch CompanionUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFD9450D2D3ACFB400111A22 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		DF28C5B02D3AC9CF0063A552 = {
 			isa = PBXGroup;
 			children = (
+				DFD9450D2D3ACFB400111A22 /* .gitignore */,
 				DF28C5BB2D3AC9CF0063A552 /* DaWarIch Companion */,
 				DF28C5CC2D3AC9D00063A552 /* DaWarIch CompanionTests */,
 				DF28C5D62D3AC9D00063A552 /* DaWarIch CompanionUITests */,
@@ -212,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFD9450E2D3ACFB900111A22 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
