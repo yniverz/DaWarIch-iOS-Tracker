@@ -1,5 +1,3 @@
-
-```markdown
 # DaWarIch Companion
 
 An iOS companion app project written in Swift.  
