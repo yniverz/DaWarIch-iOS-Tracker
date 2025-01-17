@@ -1,0 +1,557 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		DF28C5CA2D3AC9D00063A552 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DF28C5B12D3AC9CF0063A552 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DF28C5B82D3AC9CF0063A552;
+			remoteInfo = "DaWarIch Companion";
+		};
+		DF28C5D42D3AC9D00063A552 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DF28C5B12D3AC9CF0063A552 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DF28C5B82D3AC9CF0063A552;
+			remoteInfo = "DaWarIch Companion";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DF28C5B92D3AC9CF0063A552 /* DaWarIch Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DaWarIch Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF28C5C92D3AC9D00063A552 /* DaWarIch CompanionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DaWarIch CompanionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF28C5D32D3AC9D00063A552 /* DaWarIch CompanionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DaWarIch CompanionUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		DF28C5BB2D3AC9CF0063A552 /* DaWarIch Companion */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "DaWarIch Companion";
+			sourceTree = "<group>";
+		};
+		DF28C5CC2D3AC9D00063A552 /* DaWarIch CompanionTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "DaWarIch CompanionTests";
+			sourceTree = "<group>";
+		};
+		DF28C5D62D3AC9D00063A552 /* DaWarIch CompanionUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "DaWarIch CompanionUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DF28C5B62D3AC9CF0063A552 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF28C5C62D3AC9D00063A552 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF28C5D02D3AC9D00063A552 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DF28C5B02D3AC9CF0063A552 = {
+			isa = PBXGroup;
+			children = (
+				DF28C5BB2D3AC9CF0063A552 /* DaWarIch Companion */,
+				DF28C5CC2D3AC9D00063A552 /* DaWarIch CompanionTests */,
+				DF28C5D62D3AC9D00063A552 /* DaWarIch CompanionUITests */,
+				DF28C5BA2D3AC9CF0063A552 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DF28C5BA2D3AC9CF0063A552 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DF28C5B92D3AC9CF0063A552 /* DaWarIch Companion.app */,
+				DF28C5C92D3AC9D00063A552 /* DaWarIch CompanionTests.xctest */,
+				DF28C5D32D3AC9D00063A552 /* DaWarIch CompanionUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DF28C5B82D3AC9CF0063A552 /* DaWarIch Companion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DF28C5DD2D3AC9D00063A552 /* Build configuration list for PBXNativeTarget "DaWarIch Companion" */;
+			buildPhases = (
+				DF28C5B52D3AC9CF0063A552 /* Sources */,
+				DF28C5B62D3AC9CF0063A552 /* Frameworks */,
+				DF28C5B72D3AC9CF0063A552 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				DF28C5BB2D3AC9CF0063A552 /* DaWarIch Companion */,
+			);
+			name = "DaWarIch Companion";
+			packageProductDependencies = (
+			);
+			productName = "DaWarIch Companion";
+			productReference = DF28C5B92D3AC9CF0063A552 /* DaWarIch Companion.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DF28C5C82D3AC9D00063A552 /* DaWarIch CompanionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DF28C5E02D3AC9D00063A552 /* Build configuration list for PBXNativeTarget "DaWarIch CompanionTests" */;
+			buildPhases = (
+				DF28C5C52D3AC9D00063A552 /* Sources */,
+				DF28C5C62D3AC9D00063A552 /* Frameworks */,
+				DF28C5C72D3AC9D00063A552 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DF28C5CB2D3AC9D00063A552 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				DF28C5CC2D3AC9D00063A552 /* DaWarIch CompanionTests */,
+			);
+			name = "DaWarIch CompanionTests";
+			packageProductDependencies = (
+			);
+			productName = "DaWarIch CompanionTests";
+			productReference = DF28C5C92D3AC9D00063A552 /* DaWarIch CompanionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DF28C5D22D3AC9D00063A552 /* DaWarIch CompanionUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DF28C5E32D3AC9D00063A552 /* Build configuration list for PBXNativeTarget "DaWarIch CompanionUITests" */;
+			buildPhases = (
+				DF28C5CF2D3AC9D00063A552 /* Sources */,
+				DF28C5D02D3AC9D00063A552 /* Frameworks */,
+				DF28C5D12D3AC9D00063A552 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DF28C5D52D3AC9D00063A552 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				DF28C5D62D3AC9D00063A552 /* DaWarIch CompanionUITests */,
+			);
+			name = "DaWarIch CompanionUITests";
+			packageProductDependencies = (
+			);
+			productName = "DaWarIch CompanionUITests";
+			productReference = DF28C5D32D3AC9D00063A552 /* DaWarIch CompanionUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DF28C5B12D3AC9CF0063A552 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1610;
+				LastUpgradeCheck = 1610;
+				TargetAttributes = {
+					DF28C5B82D3AC9CF0063A552 = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					DF28C5C82D3AC9D00063A552 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = DF28C5B82D3AC9CF0063A552;
+					};
+					DF28C5D22D3AC9D00063A552 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = DF28C5B82D3AC9CF0063A552;
+					};
+				};
+			};
+			buildConfigurationList = DF28C5B42D3AC9CF0063A552 /* Build configuration list for PBXProject "DaWarIch Companion" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DF28C5B02D3AC9CF0063A552;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = DF28C5BA2D3AC9CF0063A552 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DF28C5B82D3AC9CF0063A552 /* DaWarIch Companion */,
+				DF28C5C82D3AC9D00063A552 /* DaWarIch CompanionTests */,
+				DF28C5D22D3AC9D00063A552 /* DaWarIch CompanionUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DF28C5B72D3AC9CF0063A552 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF28C5C72D3AC9D00063A552 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF28C5D12D3AC9D00063A552 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DF28C5B52D3AC9CF0063A552 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF28C5C52D3AC9D00063A552 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF28C5CF2D3AC9D00063A552 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DF28C5CB2D3AC9D00063A552 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DF28C5B82D3AC9CF0063A552 /* DaWarIch Companion */;
+			targetProxy = DF28C5CA2D3AC9D00063A552 /* PBXContainerItemProxy */;
+		};
+		DF28C5D52D3AC9D00063A552 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DF28C5B82D3AC9CF0063A552 /* DaWarIch Companion */;
+			targetProxy = DF28C5D42D3AC9D00063A552 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		DF28C5DB2D3AC9D00063A552 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DF28C5DC2D3AC9D00063A552 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DF28C5DE2D3AC9D00063A552 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DaWarIch Companion/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yniverz.DaWarIch-Companion";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DF28C5DF2D3AC9D00063A552 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DaWarIch Companion/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yniverz.DaWarIch-Companion";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DF28C5E12D3AC9D00063A552 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yniverz.DaWarIch-CompanionTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DaWarIch Companion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DaWarIch Companion";
+			};
+			name = Debug;
+		};
+		DF28C5E22D3AC9D00063A552 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yniverz.DaWarIch-CompanionTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DaWarIch Companion.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DaWarIch Companion";
+			};
+			name = Release;
+		};
+		DF28C5E42D3AC9D00063A552 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yniverz.DaWarIch-CompanionUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "DaWarIch Companion";
+			};
+			name = Debug;
+		};
+		DF28C5E52D3AC9D00063A552 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yniverz.DaWarIch-CompanionUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "DaWarIch Companion";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DF28C5B42D3AC9CF0063A552 /* Build configuration list for PBXProject "DaWarIch Companion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF28C5DB2D3AC9D00063A552 /* Debug */,
+				DF28C5DC2D3AC9D00063A552 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DF28C5DD2D3AC9D00063A552 /* Build configuration list for PBXNativeTarget "DaWarIch Companion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF28C5DE2D3AC9D00063A552 /* Debug */,
+				DF28C5DF2D3AC9D00063A552 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DF28C5E02D3AC9D00063A552 /* Build configuration list for PBXNativeTarget "DaWarIch CompanionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF28C5E12D3AC9D00063A552 /* Debug */,
+				DF28C5E22D3AC9D00063A552 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DF28C5E32D3AC9D00063A552 /* Build configuration list for PBXNativeTarget "DaWarIch CompanionUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF28C5E42D3AC9D00063A552 /* Debug */,
+				DF28C5E52D3AC9D00063A552 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DF28C5B12D3AC9CF0063A552 /* Project object */;
+}
