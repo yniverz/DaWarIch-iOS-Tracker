@@ -341,7 +341,7 @@ extension LocationHelper: CLLocationManagerDelegate {
     
     
     
-    func sendNotification(_ message: String, title: String?) {
+    func sendNotification(_ message: String, title: String? = nil) {
         if !debugNotifications {
             return
         }
