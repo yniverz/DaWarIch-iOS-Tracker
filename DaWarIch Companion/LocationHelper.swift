@@ -9,6 +9,7 @@ import Foundation
 import CoreLocation
 import UserNotifications
 import UIKit
+import Network
 
 class LocationHelper: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
@@ -24,6 +25,9 @@ class LocationHelper: NSObject, ObservableObject {
     
     private var writingQueue = DispatchQueue(label: "writingQueue")
     private var loopStartQueue = DispatchQueue(label: "loopStartQueue")
+    private var networkMonitorQueue = DispatchQueue(label: "networkMonitorQueue")
+    
+    var isNetworkReachable: Bool = false
     
     //set default values for configuration parameters (overwritten in init block)
     @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
@@ -128,6 +132,22 @@ class LocationHelper: NSObject, ObservableObject {
         self.locationManager.pausesLocationUpdatesAutomatically = false
         self.locationManager.distanceFilter = 100
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        let monitor = NWPathMonitor()
+        monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                print("Internet connection is available.")
+                self.sendNotification("Network Available")
+                self.isNetworkReachable = true
+                // Perform actions when internet is available
+            } else {
+                print("Internet connection is not available.")
+                self.sendNotification("Network Unvailable")
+                self.isNetworkReachable = false
+                // Perform actions when internet is not available
+            }
+        }
+        monitor.start(queue: networkMonitorQueue)
         
         if trackingActivated {
             self.start()
@@ -364,6 +384,10 @@ extension LocationHelper: CLLocationManagerDelegate {
     
     
     func sendToServer() {
+        if !isNetworkReachable {
+            return
+        }
+        
     //    {
     //      "locations": [
     //        {
