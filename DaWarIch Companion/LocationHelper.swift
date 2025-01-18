@@ -283,7 +283,7 @@ extension LocationHelper: CLLocationManagerDelegate {
             for newLocation in locations {
                 self.locationManager(didUpdateLocation: newLocation)
             }
-            sendNotification("You Signifficantly moved.")
+            sendNotification("You Moved Signifficantly.")
         }
         
         startLoop()
