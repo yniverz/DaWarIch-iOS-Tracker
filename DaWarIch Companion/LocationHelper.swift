@@ -393,7 +393,7 @@ extension LocationHelper: CLLocationManagerDelegate {
         // 1. Make sure we have something to send and a valid host
         guard !traceBuffer.isEmpty,
               !dawarichServerHost.isEmpty,
-              let url = URL(string: dawarichServerHost + "/api/v1/overland/batches")
+              let url = URL(string: dawarichServerHost + "/api/v1/overland/batches?api_key=\(dawarichServerKey)")
         else {
             print("No data to send or invalid server host.")
             return
