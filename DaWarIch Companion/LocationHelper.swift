@@ -457,7 +457,7 @@ extension LocationHelper: CLLocationManagerDelegate {
             let properties = OverlandProperties(
                 timestamp: isoTime,
                 altitude: item.alt,
-                speed: item.spd,
+                speed: item.spd * 3.6,
                 horizontal_accuracy: item.horAcc,
                 vertical_accuracy: item.altAcc,
                 motion: [],               // or fill in actual motion info
