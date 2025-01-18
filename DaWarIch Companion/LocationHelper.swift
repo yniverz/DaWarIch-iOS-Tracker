@@ -341,11 +341,17 @@ extension LocationHelper: CLLocationManagerDelegate {
     
     
     
-    func sendNotification(_ message: String, title: String = "DaWarIch") {
+    func sendNotification(_ message: String, title: String?) {
+        if !debugNotifications {
+            return
+        }
+        
         print("sending notification: \(message)")
         let content = UNMutableNotificationContent()
-        content.title = title
-//        content.subtitle = message
+        content.title = "DaWarIch"
+        if !title.isNil && title!.isEmpty {
+            content.subtitle = title!
+        }
         content.body = message
         content.sound = UNNotificationSound.default
         
@@ -509,9 +515,17 @@ extension LocationHelper: CLLocationManagerDelegate {
             if let httpResponse = response as? HTTPURLResponse {
                 guard (200...299).contains(httpResponse.statusCode) else {
                     print("Server responded with status code: \(httpResponse.statusCode)")
+                    sendNotification("\(httpResponse)", title: "HTTP Err")
                     return
                 }
+                sendNotification("\(httpResponse)", title: "HTTP Err2")
             }
+            
+//            if data.isNil {
+//                sendNotification("\(httpResponse)", title: "HTTP Succ")
+//            } else {
+                sendNotification("\(data)", title: "HTTP Succ")
+//            }
             
             // Optionally parse `data` if server returns details
             print("Data successfully sent to server and local buffer will be cleared.")
