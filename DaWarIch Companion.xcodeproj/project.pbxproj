@@ -411,6 +411,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "DaWarIch-Companion-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = DaWarIch;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "DaWarIch will Always track your location, also in the background.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "DaWarIch will Always track your location, also in the background.";
 				INFOPLIST_KEY_NSLocationUsageDescription = "DaWarIch will Always track your location, also in the background.";
@@ -450,6 +451,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "DaWarIch-Companion-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = DaWarIch;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "DaWarIch will Always track your location, also in the background.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "DaWarIch will Always track your location, also in the background.";
 				INFOPLIST_KEY_NSLocationUsageDescription = "DaWarIch will Always track your location, also in the background.";

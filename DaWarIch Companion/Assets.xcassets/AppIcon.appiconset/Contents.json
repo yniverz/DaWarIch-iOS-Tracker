@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "android-chrome-512x512-transformed.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
