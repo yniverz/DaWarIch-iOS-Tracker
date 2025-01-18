@@ -350,7 +350,7 @@ extension LocationHelper: CLLocationManagerDelegate {
         let content = UNMutableNotificationContent()
         content.title = "DaWarIch"
         if !title.isNil && title!.isEmpty {
-            content.subtitle = title!
+            content.title = "DaWarIch - " + title!
         }
         content.body = message
         content.sound = UNNotificationSound.default
@@ -518,14 +518,7 @@ extension LocationHelper: CLLocationManagerDelegate {
                     sendNotification("\(httpResponse)", title: "HTTP Err")
                     return
                 }
-                sendNotification("\(httpResponse)", title: "HTTP Err2")
             }
-            
-//            if data.isNil {
-//                sendNotification("\(httpResponse)", title: "HTTP Succ")
-//            } else {
-                sendNotification("\(data)", title: "HTTP Succ")
-//            }
             
             // Optionally parse `data` if server returns details
             print("Data successfully sent to server and local buffer will be cleared.")
