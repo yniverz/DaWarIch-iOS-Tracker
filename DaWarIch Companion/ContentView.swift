@@ -20,7 +20,7 @@ struct ContentView: View {
     @State var debugNotifications = false
     @State var selectedMaxBufferSize = 300
     
-    var maxBufferSizes: [Int] = [60, 60*2, 60*5, 60*10]
+    var maxBufferSizes: [Int] = [5, 60, 60*2, 60*5, 60*10]
     
     var body: some View {
         Text("DaWarIch - Tracker")
