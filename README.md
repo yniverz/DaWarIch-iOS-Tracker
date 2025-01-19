@@ -24,8 +24,8 @@ This App is intended to be used with the (self hosted) [DaWarIch](https://github
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-user/DaWarIch-Companion.git
-   cd DaWarIch-Companion
+   git clone https://github.com/yniverz/DaWarIch-iOS-Tracker
+   cd DaWarIch-iOS-Tracker
    ```
 2. **Open the project**:
    - Open `DaWarIch Companion.xcodeproj` in Xcode.
