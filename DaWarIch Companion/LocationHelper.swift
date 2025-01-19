@@ -24,6 +24,7 @@ class LocationHelper: NSObject, ObservableObject {
     private var stopUpdates = false
     
     private var writingQueue = DispatchQueue(label: "writingQueue")
+    private var sendingQueue = DispatchQueue(label: "sendingQueue")
     private var loopStartQueue = DispatchQueue(label: "loopStartQueue")
     private var networkMonitorQueue = DispatchQueue(label: "networkMonitorQueue")
     
@@ -251,7 +252,7 @@ class LocationHelper: NSObject, ObservableObject {
                 }
             }
             
-            sendToServer()
+            sendToServer(force: true)
         } catch {
             print("Could not start location updates")
         }
@@ -385,7 +386,16 @@ extension LocationHelper: CLLocationManagerDelegate {
     
     
     
-    func sendToServer() {
+    func sendToServer(force: Bool = false) {
+        sendingQueue.async {
+            if self.traceBuffer.count < self.selectedMaxBufferSize && !force {
+                return
+            }
+            self._sendToServer()
+        }
+    }
+    
+    func _sendToServer() {
         if !isNetworkReachable {
             return
         }
