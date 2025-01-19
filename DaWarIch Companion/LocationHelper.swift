@@ -28,6 +28,7 @@ class LocationHelper: NSObject, ObservableObject {
     private var networkMonitorQueue = DispatchQueue(label: "networkMonitorQueue")
     
     var isNetworkReachable: Bool = false
+    var validStart: Bool = false
     
     //set default values for configuration parameters (overwritten in init block)
     @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
@@ -55,6 +56,8 @@ class LocationHelper: NSObject, ObservableObject {
             UserDefaults.standard.set(newValue, forKey: "trackingActivated")
             if newValue {
                 start()
+            } else {
+                stop()
             }
         }
         get {
@@ -72,10 +75,10 @@ class LocationHelper: NSObject, ObservableObject {
     
     var debugNotifications: Bool {
         set {
-            UserDefaults.standard.set(newValue, forKey: "debugNotifications")
-            if newValue {
+            if newValue && !debugNotifications {
                 sendNotification("Notifications activated.")
             }
+            UserDefaults.standard.set(newValue, forKey: "debugNotifications")
         }
         get {
             UserDefaults.standard.bool(forKey: "debugNotifications")
@@ -121,10 +124,7 @@ class LocationHelper: NSObject, ObservableObject {
     
     override
     init() {
-//        mapProgress = MapProgressTracker(storageManager)
         super.init()
-        
-//        loadLocationTrace()
         
         //set up CLLocationManager to send us location updates continously (while active)
         self.locationManager.delegate = self
@@ -137,18 +137,17 @@ class LocationHelper: NSObject, ObservableObject {
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
                 print("Internet connection is available.")
-                self.sendNotification("Network Available")
                 self.isNetworkReachable = true
-                // Perform actions when internet is available
             } else {
                 print("Internet connection is not available.")
-                self.sendNotification("Network Unvailable")
                 self.isNetworkReachable = false
-                // Perform actions when internet is not available
             }
         }
         monitor.start(queue: networkMonitorQueue)
-        
+    }
+    
+    
+    public func tryStart() {
         if trackingActivated {
             self.start()
         }
@@ -185,10 +184,14 @@ class LocationHelper: NSObject, ObservableObject {
                 Task() {
                     self.lastMovedThreshhold = Date()
                     
+                    self.sendNotification("Starting Updates")
+                    
                     print("Starting live Service")
                     await self.livePositionLoop()
                     
                     self.updatesRunning = false
+                    
+                    self.sendNotification("Stopping Updates")
                 }
             }
         }
@@ -201,10 +204,8 @@ class LocationHelper: NSObject, ObservableObject {
         self.stopUpdates = true
     }
     
-    //get the initial authorization to access device location
     public func requestAuth() {
         if self.authorisationStatus != .authorizedAlways {
-//            self.locationManager.requestWhenInUseAuthorization()
             self.locationManager.requestAlwaysAuthorization()
         }
         
@@ -295,21 +296,26 @@ extension LocationHelper: CLLocationManagerDelegate {
         self.authorisationStatus = status
     }
     
-    //MAIN LOCATION UPDATE FUNCTION
-    //iOS calls this function WHENEVER it passes a new location to the location manager.
-    //We use this function to parse the incoming data and log it directly to Core Data
+    
+    
+    
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        sendNotification("1")
+        
         if !updatesRunning {
             for newLocation in locations {
                 self.locationManager(didUpdateLocation: newLocation)
             }
-            sendNotification("You Moved Signifficantly.")
         }
+        
         
         startLoop()
     }
     
     private func locationManager(didUpdateLocation location: CLLocation) {
+        sendNotification("2")
+        
         writingQueue.async {
             if location.horizontalAccuracy > self.maximumPositionAccuracy {
                 return
@@ -376,8 +382,8 @@ extension LocationHelper: CLLocationManagerDelegate {
         content.sound = UNNotificationSound.default
         
         // show this notification five seconds from now
-//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request)
     }
     
