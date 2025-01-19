@@ -6,8 +6,156 @@
 //
 
 import SwiftUI
+import WebKit
 
 struct ContentView: View {
+    var body: some View {
+        TabView {
+            HomepageView()
+                .tabItem {
+                    Label("Settings", systemImage: "map")
+                }
+            TrackerSettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
+                }
+        }
+    }
+}
+
+struct WebView: UIViewRepresentable {
+    let url: String
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    func makeUIView(context: Context) -> UIView {
+        // A container view that holds the toolbar and WKWebView
+        let containerView = UIView()
+        
+        // Create the toolbar at the top
+        let toolbar = UIToolbar()
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Create Back and Forward buttons using SF Symbols
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.left"),
+            style: .plain,
+            target: context.coordinator,
+            action: #selector(Coordinator.goBack)
+        )
+        
+        let forwardButton = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.right"),
+            style: .plain,
+            target: context.coordinator,
+            action: #selector(Coordinator.goForward)
+        )
+        
+        // Create a fixed space between buttons
+        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        fixedSpace.width = 20  // Adjust to add more or less space
+        
+        // Initially disable them until we know the web view's state
+        backButton.isEnabled = false
+        forwardButton.isEnabled = false
+        
+        // Assign references to the coordinator
+        context.coordinator.backButton = backButton
+        context.coordinator.forwardButton = forwardButton
+        
+        // Add the items to the toolbar
+        toolbar.items = [backButton, fixedSpace, forwardButton]
+        
+        // Create the WKWebView
+        let webView = WKWebView()
+        webView.navigationDelegate = context.coordinator
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Add subviews
+        containerView.addSubview(toolbar)
+        containerView.addSubview(webView)
+        
+        // Layout constraints
+        NSLayoutConstraint.activate([
+            // Toolbar at the top
+            toolbar.topAnchor.constraint(equalTo: containerView.topAnchor),
+            toolbar.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            toolbar.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            
+            // Web view fills the remaining space
+            webView.topAnchor.constraint(equalTo: toolbar.bottomAnchor),
+            webView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            webView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+        ])
+        
+        // Load the initial URL
+        if let url = URL(string: url) {
+            webView.load(URLRequest(url: url))
+        }
+        
+        return containerView
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {
+        // No dynamic updates for this example
+    }
+    
+    // MARK: - Coordinator
+    class Coordinator: NSObject, WKNavigationDelegate {
+        let parent: WebView
+        
+        // Keep references to the toolbar items so we can enable/disable them
+        weak var backButton: UIBarButtonItem?
+        weak var forwardButton: UIBarButtonItem?
+        
+        // Keep a reference to the WKWebView itself
+        weak var webView: WKWebView?
+        
+        init(_ parent: WebView) {
+            self.parent = parent
+        }
+        
+        // MARK: - Button Actions
+        @objc func goBack() {
+            webView?.goBack()
+        }
+        
+        @objc func goForward() {
+            webView?.goForward()
+        }
+        
+        // MARK: - WKNavigationDelegate
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            // Store reference to webView
+            self.webView = webView
+            
+            // Enable/disable buttons based on history
+            backButton?.isEnabled = webView.canGoBack
+            forwardButton?.isEnabled = webView.canGoForward
+        }
+    }
+}
+
+struct HomepageView: View {
+    @EnvironmentObject var appDelegate: AppDelegate
+    var locationHelper: LocationHelper {
+        appDelegate.locationHelper
+    }
+    
+    var body: some View {
+        if locationHelper.dawarichServerHost.isEmpty {
+            Text("Please add a Server Host in the Settings first.")
+        } else {
+            WebView(url: locationHelper.dawarichServerHost)
+        }
+    }
+}
+
+
+struct TrackerSettingsView: View {
     @EnvironmentObject var appDelegate: AppDelegate
     var locationHelper: LocationHelper {
         appDelegate.locationHelper
@@ -23,6 +171,7 @@ struct ContentView: View {
     @State private var showingInfoSheet = false
     
     private var maxBufferSizes: [Int] = [5, 60, 60*2, 60*5, 60*10]
+    
     
     var body: some View {
         NavigationStack {

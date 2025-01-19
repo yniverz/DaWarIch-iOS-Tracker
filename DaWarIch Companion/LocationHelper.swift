@@ -301,8 +301,6 @@ extension LocationHelper: CLLocationManagerDelegate {
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        sendNotification("1")
-        
         if !updatesRunning {
             for newLocation in locations {
                 self.locationManager(didUpdateLocation: newLocation)
@@ -314,8 +312,6 @@ extension LocationHelper: CLLocationManagerDelegate {
     }
     
     private func locationManager(didUpdateLocation location: CLLocation) {
-        sendNotification("2")
-        
         writingQueue.async {
             if location.horizontalAccuracy > self.maximumPositionAccuracy {
                 return
