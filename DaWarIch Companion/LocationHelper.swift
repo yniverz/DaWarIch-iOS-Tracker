@@ -145,6 +145,8 @@ class LocationHelper: NSObject, ObservableObject {
             }
         }
         monitor.start(queue: networkMonitorQueue)
+        
+        tryStart()
     }
     
     
