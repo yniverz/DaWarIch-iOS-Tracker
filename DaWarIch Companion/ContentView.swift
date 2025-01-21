@@ -169,10 +169,12 @@ struct WebView: UIViewRepresentable {
         // MARK: - Button Actions
         @objc func goBack() {
             webView?.goBack()
+            updateNavigationButtonsState(for: webView!)
         }
         
         @objc func goForward() {
             webView?.goForward()
+            updateNavigationButtonsState(for: webView!)
         }
         
         @objc func reloadPage() {
