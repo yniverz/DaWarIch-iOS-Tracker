@@ -53,11 +53,21 @@ struct WebView: UIViewRepresentable {
             action: #selector(Coordinator.goForward)
         )
         
-        // Create a fixed space between buttons
+        // Create a fixed space between the back and forward buttons
         let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        fixedSpace.width = 20  // Adjust to add more or less space
+        fixedSpace.width = 20
         
-        // Initially disable them until we know the web view's state
+        // Create a flexible space to push the reload button to the right
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        // Create a Reload button
+        let reloadButton = UIBarButtonItem(
+            barButtonSystemItem: .refresh,
+            target: context.coordinator,
+            action: #selector(Coordinator.reloadPage)
+        )
+        
+        // Initially disable Back/Forward until we know the web view's state
         backButton.isEnabled = false
         forwardButton.isEnabled = false
         
@@ -66,7 +76,7 @@ struct WebView: UIViewRepresentable {
         context.coordinator.forwardButton = forwardButton
         
         // Add the items to the toolbar
-        toolbar.items = [backButton, fixedSpace, forwardButton]
+        toolbar.items = [backButton, fixedSpace, forwardButton, flexibleSpace, reloadButton]
         
         // Create the WKWebView
         let webView = WKWebView()
@@ -127,12 +137,25 @@ struct WebView: UIViewRepresentable {
             webView?.goForward()
         }
         
+        @objc func reloadPage() {
+            webView?.reload()
+        }
+        
         // MARK: - WKNavigationDelegate
+        
+        // Called when navigation starts (e.g., after pressing Back/Forward/Reload or new page load).
+        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+            updateNavigationButtonsState(for: webView)
+        }
+        
+        // Called when navigation finishes successfully.
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            // Store reference to webView
             self.webView = webView
-            
-            // Enable/disable buttons based on history
+            updateNavigationButtonsState(for: webView)
+        }
+        
+        // MARK: - Helper
+        private func updateNavigationButtonsState(for webView: WKWebView) {
             backButton?.isEnabled = webView.canGoBack
             forwardButton?.isEnabled = webView.canGoForward
         }
