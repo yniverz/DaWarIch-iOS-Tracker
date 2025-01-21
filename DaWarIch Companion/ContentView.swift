@@ -83,6 +83,9 @@ struct WebView: UIViewRepresentable {
         webView.navigationDelegate = context.coordinator
         webView.translatesAutoresizingMaskIntoConstraints = false
         
+        // Observe URL changes via KVO
+        context.coordinator.observeWebView(webView)
+        
         // Add subviews
         containerView.addSubview(toolbar)
         containerView.addSubview(webView)
@@ -122,10 +125,45 @@ struct WebView: UIViewRepresentable {
         weak var forwardButton: UIBarButtonItem?
         
         // Keep a reference to the WKWebView itself
-        weak var webView: WKWebView?
+        private(set) weak var webView: WKWebView?
         
         init(_ parent: WebView) {
             self.parent = parent
+        }
+        
+        // MARK: - Observe WebView
+        func observeWebView(_ webView: WKWebView) {
+            self.webView = webView
+            
+            // Observe changes to the 'url' property
+            webView.addObserver(
+                self,
+                forKeyPath: #keyPath(WKWebView.url),
+                options: [.new],
+                context: nil
+            )
+        }
+        
+        deinit {
+            // Remove observer to avoid crashes
+            webView?.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
+        }
+        
+        // KVO callback
+        override func observeValue(
+            forKeyPath keyPath: String?,
+            of object: Any?,
+            change: [NSKeyValueChangeKey: Any]?,
+            context: UnsafeMutableRawPointer?
+        ) {
+            guard keyPath == #keyPath(WKWebView.url),
+                  let webView = object as? WKWebView else {
+                super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+                return
+            }
+            
+            // Whenever the URL changes (including JS changes), update button states.
+            updateNavigationButtonsState(for: webView)
         }
         
         // MARK: - Button Actions
@@ -143,14 +181,11 @@ struct WebView: UIViewRepresentable {
         
         // MARK: - WKNavigationDelegate
         
-        // Called when navigation starts (e.g., after pressing Back/Forward/Reload or new page load).
         func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
             updateNavigationButtonsState(for: webView)
         }
         
-        // Called when navigation finishes successfully.
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            self.webView = webView
             updateNavigationButtonsState(for: webView)
         }
         
