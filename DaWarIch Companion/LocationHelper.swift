@@ -162,7 +162,7 @@ class LocationHelper: NSObject, ObservableObject {
         
         self.locationManager.startUpdatingLocation()
         self.locationManager.startMonitoringSignificantLocationChanges()
-//        self.locationManager.startMonitoringVisits()
+        self.locationManager.startMonitoringVisits()
         
         startLoop()
     }
