@@ -42,3 +42,5 @@ This App is intended to be used with the (self hosted) [DaWarIch](https://github
 This app uses Core Location to track user location in the background and foreground. Make sure to enable location permissions in iOS settings when prompted by the app. Relevant strings are provided in **Info.plist** under `NSLocationAlwaysUsageDescription` and `NSLocationWhenInUseUsageDescription`.
 
 ---
+
+This project uses a logo designed by [Freika](https://github.com/Freika), used under the terms of the GNU AGPLv3. The original logo can be found at [https://github.com/Freika/dawarich/blob/master/app/assets/images/favicon/android-chrome-512x512.png].
