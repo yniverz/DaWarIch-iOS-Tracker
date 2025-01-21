@@ -15,9 +15,11 @@ class LocationHelper: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     
     private let maximumPositionAccuracy: Double = 50 // meters
-    private let regionTimeoutRadius: Double = 20 // meters
-    private let positionUpdateTimeout: Double = 60*1 // seconds
-    private let minDistanceBeforeSave: Double = 15 // meters: less than this, skip entirely
+    private let regionTimeoutRadius: Double = 20 // meters of no movement to enable turn off
+    private let positionUpdateTimeout: Double = 60*1 // seconds of no movement until turn off. (foot timeout)
+    private let positionUpdateTimeoutInVehicle: Double = 60*5 // seconds of no movement after speed was >= 30 until turn off. (vehicle timeout)
+    private let timeoutOutOfVehicle: Double = 60*3 // seconds of slow movement until resets to foot timeout
+    private let minDistanceBeforeSave: Double = 15 // meters: less than this, skip location entirely
     
     private var lastMovedThreshhold: Date?
     private var updatesRunning = false
@@ -228,6 +230,9 @@ class LocationHelper: NSObject, ObservableObject {
             let updates = CLLocationUpdate.liveUpdates()
             
             let startTime = Date()
+            var inVehicle = false
+            var lastSlowTime = Date()
+            
             self.lastMovedThreshhold = nil
             var lastMovedLocation: CLLocation? = nil
             for try await update in updates {
@@ -245,9 +250,15 @@ class LocationHelper: NSObject, ObservableObject {
                     
                     print(location)
                         
-                    if location.timestamp > self.lastMovedThreshhold!.addingTimeInterval(positionUpdateTimeout) {
+                    if location.timestamp > self.lastMovedThreshhold!.addingTimeInterval(positionUpdateTimeoutInVehicle) || (location.timestamp > self.lastMovedThreshhold!.addingTimeInterval(positionUpdateTimeout) && !inVehicle) {
                         print("Logged for ", Date().timeIntervalSince(startTime), "Seconds")
                         break
+                    }
+                    
+                    if !inVehicle && location.speed * 3.6 >= 30 {
+                        inVehicle = true
+                    } else if inVehicle && location.timestamp > lastSlowTime.addingTimeInterval(timeoutOutOfVehicle) && location.speed * 3.6 < 30 && location.speed * 3.6 >= 5 {
+                        inVehicle = false
                     }
                     
                     self.locationManager(didUpdateLocation: location)
