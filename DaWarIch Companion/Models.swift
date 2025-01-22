@@ -43,3 +43,49 @@ struct LocationItem: Codable, Hashable {
     
     static let allZero = LocationItem(time: 0, lat: 0, lng: 0, horAcc: 0, alt: 0, altAcc: 0, floor: 0, hdg: 0, hdgAcc: 0, spd: 0, spdAcc: 0)
 }
+
+
+struct TrackingPoint: Decodable {
+    var altitude: Float
+    var longitude: String
+    var velocity: String
+    var vertical_accuracy: Float
+    var accuracy: Float
+    var timestamp: Int
+    var latitude: String
+    var city: String?
+    var country: String?
+}
+
+
+struct MonthlyDistance: Decodable {
+    let january: Int
+    let february: Int
+    let march: Int
+    let april: Int
+    let may: Int
+    let june: Int
+    let july: Int
+    let august: Int
+    let september: Int
+    let october: Int
+    let november: Int
+    let december: Int
+}
+
+struct YearlyStatistic: Decodable {
+    let year: Int
+    let totalDistanceKm: Int
+    let totalCountriesVisited: Int
+    let totalCitiesVisited: Int
+    let monthlyDistanceKm: MonthlyDistance
+}
+
+struct TotalStatistic: Decodable {
+    let totalDistanceKm: Int
+    let totalPointsTracked: Int
+    let totalReverseGeocodedPoints: Int
+    let totalCountriesVisited: Int
+    let totalCitiesVisited: Int
+    let yearlyStats: [YearlyStatistic]
+}

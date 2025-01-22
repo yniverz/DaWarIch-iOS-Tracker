@@ -30,37 +30,6 @@ struct ContentView: View {
     }
 }
 
-struct MonthlyDistance: Decodable {
-    let january: Int
-    let february: Int
-    let march: Int
-    let april: Int
-    let may: Int
-    let june: Int
-    let july: Int
-    let august: Int
-    let september: Int
-    let october: Int
-    let november: Int
-    let december: Int
-}
-
-struct YearlyStatistic: Decodable {
-    let year: Int
-    let totalDistanceKm: Int
-    let totalCountriesVisited: Int
-    let totalCitiesVisited: Int
-    let monthlyDistanceKm: MonthlyDistance
-}
-
-struct TotalStatistic: Decodable {
-    let totalDistanceKm: Int
-    let totalPointsTracked: Int
-    let totalReverseGeocodedPoints: Int
-    let totalCountriesVisited: Int
-    let totalCitiesVisited: Int
-    let yearlyStats: [YearlyStatistic]
-}
 
 struct StatisticsView: View {
     @EnvironmentObject private var appDelegate: AppDelegate
@@ -100,8 +69,9 @@ struct StatisticsView: View {
                     if totalStatistic.totalDistanceKm != 0 {
                         HStack {
                             Text("Total Distance")
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             Text("\(totalStatistic.totalDistanceKm)km")
-                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .frame(alignment: .trailing)
                         }
                         .font(.system(size: 20, weight: .heavy))
                     }
@@ -109,8 +79,9 @@ struct StatisticsView: View {
                     if totalStatistic.totalPointsTracked != 0 {
                         HStack {
                             Text("Total Geopoints")
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             Text("\(totalStatistic.totalPointsTracked)")
-                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .frame(alignment: .trailing)
                         }
                         .font(.system(size: 20, weight: .heavy))
                     }
@@ -118,8 +89,9 @@ struct StatisticsView: View {
                     if totalStatistic.totalReverseGeocodedPoints != 0 {
                         HStack {
                             Text("Reverse Geocoded")
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             Text("\(totalStatistic.totalReverseGeocodedPoints)")
-                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .frame(alignment: .trailing)
                         }
                         .font(.system(size: 20, weight: .heavy))
                     }
@@ -127,8 +99,9 @@ struct StatisticsView: View {
                     if totalStatistic.totalCountriesVisited != 0 {
                         HStack {
                             Text("Countries")
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             Text("\(totalStatistic.totalCountriesVisited)")
-                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .frame(alignment: .trailing)
                         }
                         .font(.system(size: 20, weight: .heavy))
                     }
@@ -136,8 +109,9 @@ struct StatisticsView: View {
                     if totalStatistic.totalCitiesVisited != 0 {
                         HStack {
                             Text("Cities")
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             Text("\(totalStatistic.totalCitiesVisited)")
-                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .frame(alignment: .trailing)
                         }
                         .font(.system(size: 20, weight: .heavy))
                     }
@@ -225,42 +199,6 @@ struct StatisticsView: View {
     }
 }
 
-//"id":723714,
-//"battery_status":"unknown",
-//"ping":null,
-//"battery":null,
-//"tracker_id":"Dawarich",
-//"topic":null,
-//"altitude":0,
-//"longitude":"9.361987",
-//"velocity":"0",
-//"trigger":null,
-//"bssid":null,
-//"ssid":"unknown",
-//"connection":null,
-//"vertical_accuracy":0,
-//"accuracy":0,
-//"timestamp":1737563921,
-//"latitude":"48.89917",
-//"mode":null,
-//"inrids":[],
-//"in_regions":[],
-//"city":null,
-//"country":null,
-//"geodata":{},
-//"reverse_geocoded_at":null
-
-struct TrackingPoint: Decodable {
-    var altitude: Float
-    var longitude: String
-    var velocity: String
-    var vertical_accuracy: Float
-    var accuracy: Float
-    var timestamp: Int
-    var latitude: String
-    var city: String?
-    var country: String?
-}
 
 
 struct LocalMapView: View {
