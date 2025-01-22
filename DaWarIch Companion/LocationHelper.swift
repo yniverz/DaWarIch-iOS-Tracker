@@ -259,6 +259,7 @@ class LocationHelper: NSObject, ObservableObject {
                         inVehicle = true
                     } else if inVehicle && location.timestamp > lastSlowTime.addingTimeInterval(timeoutOutOfVehicle) && location.speed * 3.6 < 30 && location.speed * 3.6 >= 5 {
                         inVehicle = false
+                        lastSlowTime = Date()
                     }
                     
                     self.locationManager(didUpdateLocation: location)
