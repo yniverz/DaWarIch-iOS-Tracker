@@ -13,9 +13,10 @@ import Charts
 struct ContentView: View {
     var body: some View {
         TabView {
-            LocalMapView()
+//            LocalMapView()
+            HomepageView()
                 .tabItem {
-                    Label("Settings", systemImage: "map")
+                    Label("Map", systemImage: "map")
                 }
             StatisticsView()
                 .tabItem {
@@ -205,7 +206,9 @@ struct StatisticsView: View {
             .navigationTitle("Statistics")
             .refreshable(action: { refreshStatistics() })
             .onAppear() {
-                refreshStatistics()
+                if totalStatistic.totalPointsTracked == 0 {
+                    refreshStatistics()
+                }
             }
             .overlay(
                 Group {
@@ -283,7 +286,8 @@ struct LocalMapView: View {
         
         print(startString)
         
-        let url = URL(string: locationHelper.dawarichServerHost + "/api/v1/points?api_key=\(locationHelper.dawarichServerKey)&start_at\(startString)=&end_at=\(endString)")!
+        let url = URL(string: locationHelper.dawarichServerHost + "/api/v1/points?api_key=\(locationHelper.dawarichServerKey)&start_at\(startString)T13:00:00Z=&end_at=\(endString)T13:00:00Z&per_page=1000")!
+        print(url)
 
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard let jsonData = data else {
@@ -295,8 +299,10 @@ struct LocalMapView: View {
             let decoder = JSONDecoder()
 
             do {
+                print(jsonData.count)
                 requestedPoints = try decoder.decode([TrackingPoint].self, from: jsonData)
                 requestedCoordinates = requestedPoints.map( { CLLocationCoordinate2D(latitude: Double($0.latitude)!, longitude: Double($0.longitude)!) } )
+                print(requestedCoordinates.count)
             } catch {
                 print(error.localizedDescription)
             }
@@ -331,7 +337,9 @@ struct LocalMapView: View {
             .padding(.bottom, 8)
             .padding(.horizontal)
             .onAppear() {
-                refreshData()
+                if requestedPoints.isEmpty {
+                    refreshData()
+                }
             }
         }
         .overlay(
@@ -349,197 +357,197 @@ struct LocalMapView: View {
 }
 
 
-//
-//struct HomepageView: View {
-//    @EnvironmentObject var appDelegate: AppDelegate
-//    var locationHelper: LocationHelper {
-//        appDelegate.locationHelper
-//    }
-//    
-//    var body: some View {
-//        if locationHelper.dawarichServerHost.isEmpty {
-//            Text("Please add a Server Host in the Settings first.")
-//        } else {
-//            WebView(url: locationHelper.dawarichServerHost)
-//        }
-//    }
-//}
-//
-//struct WebView: UIViewRepresentable {
-//    let url: String
-//    
-//    func makeCoordinator() -> Coordinator {
-//        Coordinator(self)
-//    }
-//    
-//    func makeUIView(context: Context) -> UIView {
-//        // A container view that holds the toolbar and WKWebView
-//        let containerView = UIView()
-//        
-//        // Create the toolbar at the top
-//        let toolbar = UIToolbar()
-//        toolbar.translatesAutoresizingMaskIntoConstraints = false
-//        
-//        // Create Back and Forward buttons using SF Symbols
-//        let backButton = UIBarButtonItem(
-//            image: UIImage(systemName: "chevron.left"),
-//            style: .plain,
-//            target: context.coordinator,
-//            action: #selector(Coordinator.goBack)
-//        )
-//        
-//        let forwardButton = UIBarButtonItem(
-//            image: UIImage(systemName: "chevron.right"),
-//            style: .plain,
-//            target: context.coordinator,
-//            action: #selector(Coordinator.goForward)
-//        )
-//        
-//        // Create a fixed space between the back and forward buttons
-//        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-//        fixedSpace.width = 20
-//        
-//        // Create a flexible space to push the reload button to the right
-//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        
-//        // Create a Reload button
-//        let reloadButton = UIBarButtonItem(
-//            barButtonSystemItem: .refresh,
-//            target: context.coordinator,
-//            action: #selector(Coordinator.reloadPage)
-//        )
-//        
-//        // Initially disable Back/Forward until we know the web view's state
-//        backButton.isEnabled = false
-//        forwardButton.isEnabled = false
-//        
-//        // Assign references to the coordinator
-//        context.coordinator.backButton = backButton
-//        context.coordinator.forwardButton = forwardButton
-//        
-//        // Add the items to the toolbar
-//        toolbar.items = [backButton, fixedSpace, forwardButton, flexibleSpace, reloadButton]
-//        
-//        // Create the WKWebView
-//        let webView = WKWebView()
-//        webView.navigationDelegate = context.coordinator
-//        webView.translatesAutoresizingMaskIntoConstraints = false
-//        
-//        // Observe URL changes via KVO
-//        context.coordinator.observeWebView(webView)
-//        
-//        // Add subviews
-//        containerView.addSubview(toolbar)
-//        containerView.addSubview(webView)
-//        
-//        // Layout constraints
-//        NSLayoutConstraint.activate([
-//            // Toolbar at the top
-//            toolbar.topAnchor.constraint(equalTo: containerView.topAnchor),
-//            toolbar.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-//            toolbar.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-//            
-//            // Web view fills the remaining space
-//            webView.topAnchor.constraint(equalTo: toolbar.bottomAnchor),
-//            webView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-//            webView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-//            webView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-//        ])
-//        
-//        // Load the initial URL
-//        if let url = URL(string: url) {
-//            webView.load(URLRequest(url: url))
-//        }
-//        
-//        return containerView
-//    }
-//    
-//    func updateUIView(_ uiView: UIView, context: Context) {
-//        // No dynamic updates for this example
-//    }
-//    
-//    // MARK: - Coordinator
-//    class Coordinator: NSObject, WKNavigationDelegate {
-//        let parent: WebView
-//        
-//        // Keep references to the toolbar items so we can enable/disable them
-//        weak var backButton: UIBarButtonItem?
-//        weak var forwardButton: UIBarButtonItem?
-//        
-//        // Keep a reference to the WKWebView itself
-//        private(set) weak var webView: WKWebView?
-//        
-//        init(_ parent: WebView) {
-//            self.parent = parent
-//        }
-//        
-//        // MARK: - Observe WebView
-//        func observeWebView(_ webView: WKWebView) {
-//            self.webView = webView
-//            
-//            // Observe changes to the 'url' property
-//            webView.addObserver(
-//                self,
-//                forKeyPath: #keyPath(WKWebView.url),
-//                options: [.new],
-//                context: nil
-//            )
-//        }
-//        
-//        deinit {
-//            // Remove observer to avoid crashes
-//            webView?.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
-//        }
-//        
-//        // KVO callback
-//        override func observeValue(
-//            forKeyPath keyPath: String?,
-//            of object: Any?,
-//            change: [NSKeyValueChangeKey: Any]?,
-//            context: UnsafeMutableRawPointer?
-//        ) {
-//            guard keyPath == #keyPath(WKWebView.url),
-//                  let webView = object as? WKWebView else {
-//                super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-//                return
-//            }
-//            
-//            // Whenever the URL changes (including JS changes), update button states.
-//            updateNavigationButtonsState(for: webView)
-//        }
-//        
-//        // MARK: - Button Actions
-//        @objc func goBack() {
-//            webView?.goBack()
-//            updateNavigationButtonsState(for: webView!)
-//        }
-//        
-//        @objc func goForward() {
-//            webView?.goForward()
-//            updateNavigationButtonsState(for: webView!)
-//        }
-//        
-//        @objc func reloadPage() {
-//            webView?.reload()
-//        }
-//        
-//        // MARK: - WKNavigationDelegate
-//        
-//        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-//            updateNavigationButtonsState(for: webView)
-//        }
-//        
-//        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//            updateNavigationButtonsState(for: webView)
-//        }
-//        
-//        // MARK: - Helper
-//        private func updateNavigationButtonsState(for webView: WKWebView) {
-//            backButton?.isEnabled = webView.canGoBack
-//            forwardButton?.isEnabled = webView.canGoForward
-//        }
-//    }
-//}
+
+struct HomepageView: View {
+    @EnvironmentObject var appDelegate: AppDelegate
+    var locationHelper: LocationHelper {
+        appDelegate.locationHelper
+    }
+    
+    var body: some View {
+        if locationHelper.dawarichServerHost.isEmpty {
+            Text("Please add a Server Host in the Settings first.")
+        } else {
+            WebView(url: locationHelper.dawarichServerHost)
+        }
+    }
+}
+
+struct WebView: UIViewRepresentable {
+    let url: String
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    func makeUIView(context: Context) -> UIView {
+        // A container view that holds the toolbar and WKWebView
+        let containerView = UIView()
+        
+        // Create the toolbar at the top
+        let toolbar = UIToolbar()
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Create Back and Forward buttons using SF Symbols
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.left"),
+            style: .plain,
+            target: context.coordinator,
+            action: #selector(Coordinator.goBack)
+        )
+        
+        let forwardButton = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.right"),
+            style: .plain,
+            target: context.coordinator,
+            action: #selector(Coordinator.goForward)
+        )
+        
+        // Create a fixed space between the back and forward buttons
+        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        fixedSpace.width = 20
+        
+        // Create a flexible space to push the reload button to the right
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        // Create a Reload button
+        let reloadButton = UIBarButtonItem(
+            barButtonSystemItem: .refresh,
+            target: context.coordinator,
+            action: #selector(Coordinator.reloadPage)
+        )
+        
+        // Initially disable Back/Forward until we know the web view's state
+        backButton.isEnabled = false
+        forwardButton.isEnabled = false
+        
+        // Assign references to the coordinator
+        context.coordinator.backButton = backButton
+        context.coordinator.forwardButton = forwardButton
+        
+        // Add the items to the toolbar
+        toolbar.items = [backButton, fixedSpace, forwardButton, flexibleSpace, reloadButton]
+        
+        // Create the WKWebView
+        let webView = WKWebView()
+        webView.navigationDelegate = context.coordinator
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Observe URL changes via KVO
+        context.coordinator.observeWebView(webView)
+        
+        // Add subviews
+        containerView.addSubview(toolbar)
+        containerView.addSubview(webView)
+        
+        // Layout constraints
+        NSLayoutConstraint.activate([
+            // Toolbar at the top
+            toolbar.topAnchor.constraint(equalTo: containerView.topAnchor),
+            toolbar.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            toolbar.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            
+            // Web view fills the remaining space
+            webView.topAnchor.constraint(equalTo: toolbar.bottomAnchor),
+            webView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            webView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+        ])
+        
+        // Load the initial URL
+        if let url = URL(string: url) {
+            webView.load(URLRequest(url: url))
+        }
+        
+        return containerView
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {
+        // No dynamic updates for this example
+    }
+    
+    // MARK: - Coordinator
+    class Coordinator: NSObject, WKNavigationDelegate {
+        let parent: WebView
+        
+        // Keep references to the toolbar items so we can enable/disable them
+        weak var backButton: UIBarButtonItem?
+        weak var forwardButton: UIBarButtonItem?
+        
+        // Keep a reference to the WKWebView itself
+        private(set) weak var webView: WKWebView?
+        
+        init(_ parent: WebView) {
+            self.parent = parent
+        }
+        
+        // MARK: - Observe WebView
+        func observeWebView(_ webView: WKWebView) {
+            self.webView = webView
+            
+            // Observe changes to the 'url' property
+            webView.addObserver(
+                self,
+                forKeyPath: #keyPath(WKWebView.url),
+                options: [.new],
+                context: nil
+            )
+        }
+        
+        deinit {
+            // Remove observer to avoid crashes
+            webView?.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
+        }
+        
+        // KVO callback
+        override func observeValue(
+            forKeyPath keyPath: String?,
+            of object: Any?,
+            change: [NSKeyValueChangeKey: Any]?,
+            context: UnsafeMutableRawPointer?
+        ) {
+            guard keyPath == #keyPath(WKWebView.url),
+                  let webView = object as? WKWebView else {
+                super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+                return
+            }
+            
+            // Whenever the URL changes (including JS changes), update button states.
+            updateNavigationButtonsState(for: webView)
+        }
+        
+        // MARK: - Button Actions
+        @objc func goBack() {
+            webView?.goBack()
+            updateNavigationButtonsState(for: webView!)
+        }
+        
+        @objc func goForward() {
+            webView?.goForward()
+            updateNavigationButtonsState(for: webView!)
+        }
+        
+        @objc func reloadPage() {
+            webView?.reload()
+        }
+        
+        // MARK: - WKNavigationDelegate
+        
+        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+            updateNavigationButtonsState(for: webView)
+        }
+        
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            updateNavigationButtonsState(for: webView)
+        }
+        
+        // MARK: - Helper
+        private func updateNavigationButtonsState(for webView: WKWebView) {
+            backButton?.isEnabled = webView.canGoBack
+            forwardButton?.isEnabled = webView.canGoForward
+        }
+    }
+}
 
 
 struct TrackerSettingsView: View {
