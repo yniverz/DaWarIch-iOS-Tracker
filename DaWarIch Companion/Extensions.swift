@@ -9,6 +9,14 @@ import Foundation
 import CoreLocation
 import MapKit
 
+extension String {
+    func capitalizingFirstLetter() -> String {
+        let first = String(self.prefix(1)).capitalized
+        let other = String(self.dropFirst())
+        return first + other
+    }
+}
+
 
 extension Date {
     func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
