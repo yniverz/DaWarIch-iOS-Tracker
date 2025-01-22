@@ -1,21 +1,7 @@
 # DaWarIch Companion
 
-An iOS [DaWarIch](https://github.com/Freika/dawarich) companion app written in Swift.  
+An iOS [DaWarIch](https://github.com/Freika/dawarich) high density companion app written in Swift.  
 This App is intended to be used with the (self hosted) [DaWarIch](https://github.com/Freika/dawarich) Location Timeline service.
-
----
-
-## Main Files and Directories
-
-- **DaWarIch Companion (directory)**  
-  Contains Swift source files for the app’s functionality:
-  - `AppDelegate.swift` and `DaWarIch_CompanionApp.swift`: App lifecycle and entry point.
-  - `ContentView.swift`: Main SwiftUI view for the app.
-  - `LocationHelper.swift`: Handles location tracking and permissions.
-  - `Extensions.swift`: Utility extensions for common data types.
-  - `Models.swift`: Data models for location items and supporting structures.
-  - `Assets.xcassets`: Image and color assets used by the app.
-  - `Preview Content/Preview Assets.xcassets`: Additional resources for SwiftUI Previews.
 
 ---
 
@@ -39,8 +25,9 @@ This App is intended to be used with the (self hosted) [DaWarIch](https://github
 
 ## Location Tracking
 
-This app uses Core Location to track user location in the background and foreground. Make sure to enable location permissions in iOS settings when prompted by the app. Relevant strings are provided in **Info.plist** under `NSLocationAlwaysUsageDescription` and `NSLocationWhenInUseUsageDescription`.
+This app uses Core Location to track user location in the background. Make sure to enable location permissions in iOS settings when prompted by the app. The key feature of this app is its high density of tracking points. It will automatically detect when the user starts moving and begin tracking every GPS fix until the user stops again.
 
 ---
 
+As Apple requires any developer to publicly display their full government name when publishing an app, I will currently not be publishing this app in the App Store.
 This project uses a logo designed by [Freika](https://github.com/Freika), used under the terms of the GNU AGPLv3. The original logo can be found at [android-chrome-512x512.png](https://github.com/Freika/dawarich/blob/master/app/assets/images/favicon/android-chrome-512x512.png).
