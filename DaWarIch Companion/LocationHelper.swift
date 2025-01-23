@@ -231,7 +231,7 @@ class LocationHelper: NSObject, ObservableObject {
             
             let startTime = Date()
             var inVehicle = false
-            var lastSlowTime = Date()
+            var lastFastTime = Date(timeIntervalSince1970: 0)
             
             self.lastMovedThreshhold = nil
             var lastMovedLocation: CLLocation? = nil
@@ -255,11 +255,14 @@ class LocationHelper: NSObject, ObservableObject {
                         break
                     }
                     
+                    if location.speed * 3.6 >= 30 {
+                        lastFastTime = Date()
+                    }
+                    
                     if !inVehicle && location.speed * 3.6 >= 30 {
                         inVehicle = true
-                    } else if inVehicle && location.timestamp > lastSlowTime.addingTimeInterval(timeoutOutOfVehicle) && location.speed * 3.6 < 30 && location.speed * 3.6 >= 5 {
+                    } else if inVehicle && location.timestamp > lastFastTime.addingTimeInterval(timeoutOutOfVehicle) && location.speed * 3.6 < 30 && location.speed * 3.6 >= 5 {
                         inVehicle = false
-                        lastSlowTime = Date()
                     }
                     
                     self.locationManager(didUpdateLocation: location)
