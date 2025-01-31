@@ -1,4 +1,4 @@
-# DaWarIch Companion
+# DaWarIch Companion (NO LONGER MAINTAINED)
 
 An iOS [DaWarIch](https://github.com/Freika/dawarich) high density companion app written in Swift.  
 This App is intended to be used with the (self hosted) [DaWarIch](https://github.com/Freika/dawarich) Location Timeline service.
